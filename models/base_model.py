@@ -4,6 +4,7 @@ Contains class BaseModel
 """
 
 from datetime import datetime
+import hashlib
 import models
 from os import getenv
 import sqlalchemy
@@ -46,6 +47,9 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
+
+        hash_object = hashlib.md5(self.id.encode())
+        self.id = hash_object.hexdigest()
 
     def __str__(self):
         """String representation of the BaseModel class"""
